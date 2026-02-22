@@ -71,7 +71,7 @@ with col_right:
     name = st.text_input("Customer Name")
     car = st.text_input("Vehicle Model (e.g. BMW M3)")
     
-    phone = "18765555555" # CHANGE TO REAL NUMBER
+    phone = "1876693455" # CHANGE TO REAL NUMBER
     msg = f"Hi Bowla's Garage, my name is {name}. I'd like to book a {service} for my {car}."
     link = f"https://wa.me/{phone}?text={msg.replace(' ', '%20')}"
     
