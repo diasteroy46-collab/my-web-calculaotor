@@ -1,63 +1,95 @@
 import streamlit as st
 
-# 1. SETTINGS & STYLE
-st.set_page_config(page_title="Bowla's Garage", page_icon="🏎️")
-st.markdown("<style>main {background-color: #000; color: #fff;}</style>", unsafe_allow_html=True)
+# 1. Page Configuration
+st.set_page_config(page_title="Bowla's Garage | BMW Specialist", page_icon="🏎️", layout="wide")
 
-# 2. THE SMART DATABASE (The "Various Lists")
-# This is where we link Services to specific Models and Prices
+# 2. Elite M-Performance Styling (The Drip)
+st.markdown("""
+    <style>
+    .main { background-color: #000000; color: #ffffff; }
+    [data-testid="stAppViewContainer"] {
+        background-color: #000000;
+        border-top: 15px solid;
+        border-image: linear-gradient(to right, #5da9e1 33%, #003399 33% 66%, #ff0000 66%) 1;
+    }
+    /* Style the dropdown labels */
+    .stSelectbox label { color: #888 !important; font-weight: bold; }
+    /* Style the price box */
+    .price-card {
+        background-color: #111; 
+        padding: 25px; 
+        border-radius: 15px; 
+        border-left: 5px solid #0066ff; 
+        border-right: 5px solid #ff0000; 
+        text-align: center;
+        margin-top: 20px;
+    }
+    h1, h2, h3, p { color: white !important; }
+    </style>
+""", unsafe_allow_html=True)
+
+# 3. The Smart Pricing Database (The Brain)
 pricing_data = {
     "Engine Tuning": {
-        "M2": 30000,
-        "M3": 35000,
-        "M4": 35000,
-        "M5": 40000,
-        "M6": 40000,
-        "X5M": 45000
+        "M2": 30000, "M3": 35000, "M4": 35000, "M5": 40000, "M6": 40000, "X5M": 45000
     },
-    "Full Synthetic Oil Change": {
-        "M2": 15000,
-        "M3": 18000,
-        "M4": 18000,
-        "M5": 22000,
-        "M6": 22000,
-        "X5M": 25000
+    "Oil Change (Full Synthetic)": {
+        "M2": 15000, "M3": 18000, "M4": 18000, "M5": 22000, "M6": 22000, "X5M": 25000
     },
     "Brake System Overhaul": {
-        "M2": 25000,
-        "M3": 28000,
-        "M4": 28000,
-        "M5": 35000,
-        "M6": 35000,
-        "X5M": 38000
+        "M2": 25000, "M3": 28000, "M4": 28000, "M5": 35000, "M6": 35000, "X5M": 38000
+    },
+    "Computer Diagnostics": {
+        "M2": 5500, "M3": 5500, "M4": 5500, "M5": 5500, "M6": 5500, "X5M": 5500
     }
 }
 
-# 3. THE HEADER
-st.title("BOWLA'S GARAGE LTD")
-st.write("📍 90C Red Hills Rd, Kingston 19")
+# 4. Header Section
+st.markdown("# BOWLA'S GARAGE LTD")
+st.markdown("### 🏁 BMW M-Performance Specialist")
+st.markdown("📍 90C Red Hills Rd, Kingston 19")
 st.divider()
 
-# 4. THE DYNAMIC DROPDOWNS (This is what you're looking for!)
+# 5. The Estimator UI (The Function)
+col_left, col_right = st.columns(2, gap="large")
 
-# Step A: User picks the Service
-service_choice = st.selectbox("Select Service", list(pricing_data.keys()))
+with col_left:
+    st.subheader("🛠️ SERVICE ESTIMATOR")
+    
+    # Selection logic
+    service_choice = st.selectbox("What do you need done?", list(pricing_data.keys()))
+    
+    available_models = list(pricing_data[service_choice].keys())
+    model_choice = st.selectbox("Which BMW do you drive?", available_models)
+    
+    price = pricing_data[service_choice][model_choice]
 
-# Step B: The app automatically finds the Models for THAT service
-available_models = list(pricing_data[service_choice].keys())
+    # Price Display with the CSS class we made above
+    st.markdown(f"""
+        <div class="price-card">
+            <p style="color: #888; margin: 0;">Estimated Price for {model_choice}</p>
+            <h1 style="color: #0066ff; margin: 0; font-size: 40px;">${price:,} JMD</h1>
+            <small style="color: #555;">*Subject to part availability</small>
+        </div>
+    """, unsafe_allow_html=True)
 
-# Step C: User picks the Model from the NEW list
-model_choice = st.selectbox("Select BMW Model", available_models)
+with col_right:
+    st.subheader("📅 BOOK APPOINTMENT")
+    st.write("Ready to bring your machine in? Send your estimate directly to Bowla's WhatsApp.")
+    
+    # WhatsApp Integration
+    phone_number = "18766693455" 
+    message = f"Hi Bowla, I'd like to book a {service_choice} for my BMW {model_choice}. My estimate was ${price:,} JMD."
+    whatsapp_url = f"https://wa.me/{phone_number}?text={message.replace(' ', '%20')}"
+    
+    # Professional WhatsApp Button
+    st.markdown(f'''
+        <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
+            <div style="background-color: #25D366; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 10px;">
+                🚀 Send to WhatsApp
+            </div>
+        </a>
+    ''', unsafe_allow_html=True)
 
-# Step D: The app pulls the final price
-price = pricing_data[service_choice][model_choice]
-
-# 5. THE RESULT BOX
-st.info(f"Estimate for {model_choice}: **${price:,} JMD**")
-
-# 6. WHATSAPP BOOKING
-phone = "18765105118" # Update with Bowla's number
-msg = f"Hi Bowla, I'd like to book a {service_choice} for my BMW {model_choice}. Estimate: ${price:,} JMD."
-url = f"https://wa.me/{phone}?text={msg.replace(' ', '%20')}"
-
-st.link_button("🚀 Send to WhatsApp", url)
+st.divider()
+st.caption("© 2026 Bowla's Garage Ltd | Kingston, Jamaica")
