@@ -29,7 +29,7 @@ st.markdown("""
     }
 
     h1, h2, h3, p, span, label { color: white !important; }
-    .stSelectbox label { color: #888 !important; }
+    .stSelectbox label, .stTextInput label { color: #888 !important; }
     
     .footer-text {
         text-align: center;
@@ -77,10 +77,19 @@ with col_left:
 
 with col_right:
     st.subheader("📅 BOOK APPOINTMENT")
-    st.write("Ready to bring your machine in? Send your estimate to Bowla's WhatsApp.")
+    # THE RESTORED FEATURE: Customer Name
+    customer_name = st.text_input("Your Name", placeholder="e.g. John Doe")
+    st.write("Send your estimate to Bowla's WhatsApp to secure your slot.")
     
-    phone_number = "18766693455" 
-    message = f"Hi Bowla, I'd like to book a {service_choice} for my BMW {model_choice}. Estimate: ${price:,} JMD."
+    phone_number = "1875105118" 
+    
+    # Message logic that includes the name
+    if customer_name:
+        greeting = f"Hi Bowla, my name is {customer_name}."
+    else:
+        greeting = "Hi Bowla,"
+        
+    message = f"{greeting} I'd like to book a {service_choice} for my BMW {model_choice}. Estimate: ${price:,} JMD."
     whatsapp_url = f"https://wa.me/{phone_number}?text={message.replace(' ', '%20')}"
     
     st.markdown(f'''
@@ -97,7 +106,7 @@ col1, col2, col3 = st.columns(3)
 with col2:
     st.markdown("""
         <div style="text-align: center;">
-            <h4>⏰ OPENING HOURS</h4>
+            <h4 style="color: #5da9e1 !important;">⏰ OPENING HOURS</h4>
             <p>Mon - Fri: 8:30 AM - 5:30 PM</p>
             <p>Sat: 9:00 AM - 3:00 PM</p>
             <p>Sun: Closed</p>
