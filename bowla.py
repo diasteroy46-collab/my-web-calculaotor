@@ -81,7 +81,7 @@ with col_right:
     customer_name = st.text_input("Your Name", placeholder="e.g. John Doe")
     st.write("Send your estimate to Bowla's WhatsApp to secure your slot.")
     
-    phone_number = "1875105118" 
+    phone_number = "18765105118" 
     
     # Message logic that includes the name
     if customer_name:
