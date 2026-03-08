@@ -1,116 +1,149 @@
 import streamlit as st
 
-# --- PAGE CONFIG (Back to the original centered layout) ---
-st.set_page_config(
-    page_title="Bowla's Garage | BMW Specialist",
-    page_icon="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg",
-    layout="centered"
-)
+# --- 1. PAGE CONFIG ---
+st.set_page_config(page_title="Bowla's Garage", page_icon="🚗", layout="wide")
 
-# --- CLEAN CSS (No "Fixed" positions to avoid shifting the web layout) ---
+# --- 2. PREMIUM DARK THEME & M-STRIPE CSS ---
 st.markdown("""
     <style>
+    /* Global Background */
+    .stApp {
+        background-color: #050505;
+        color: white;
+    }
+    
+    /* M-Stripe Header */
     .m-stripe {
         height: 10px;
         width: 100%;
-        display: flex;
-        margin-bottom: 20px;
+        background: linear-gradient(90deg, #0033ad 0%, #0033ad 33%, #000000 33%, #000000 66%, #ff0000 66%, #ff0000 100%);
+        margin-bottom: 30px;
     }
-    .m-blue { background-color: #0033AD; flex: 1; }
-    .m-dark-blue { background-color: #001C57; flex: 1; }
-    .m-red { background-color: #E7222E; flex: 1; }
-    
-    /* Price Box that works in both Light and Dark mode */
-    .price-box {
-        padding: 20px;
-        border-radius: 10px;
-        background-color: rgba(0, 51, 173, 0.1);
-        border-left: 5px solid #0033AD;
-        margin: 20px 0;
+
+    /* Centered Logo & Title Area */
+    .header-container {
+        text-align: center;
+        margin-bottom: 40px;
     }
     
+    /* Premium Cards */
+    .custom-card {
+        background-color: #111111;
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid #222;
+        min-height: 480px;
+    }
+
+    /* Pricing Text */
+    .price-display {
+        color: #4da3ff;
+        font-size: 42px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    /* Footer Styling */
+    .footer {
+        text-align: center;
+        color: #666;
+        margin-top: 50px;
+        font-size: 14px;
+        border-top: 1px solid #222;
+        padding-top: 20px;
+    }
+    
+    /* WhatsApp Button */
     .stButton>button {
         width: 100%;
-        background-color: #0033AD;
+        background-color: #25D366;
         color: white;
         font-weight: bold;
-        height: 3.5em;
+        border: none;
+        height: 50px;
+        border-radius: 10px;
     }
     </style>
-    
-    <div class="m-stripe">
-        <div class="m-blue"></div>
-        <div class="m-dark-blue"></div>
-        <div class="m-red"></div>
+    """, unsafe_allow_html=True)
+
+# --- 3. DATA FROM YOUR PHOTO ---
+# Including your handwritten B58 updates
+pricing_data = {
+    "N20": {"Basic F30": 32800, "Regular F30": 43300},
+    "N55": {"Basic F30": 35800, "Regular F30": 46300},
+    "B48": {"Basic F30": 39500, "Regular F30": 45000},
+    "B58": {"Basic F30": 44000, "Regular F30": 57500} # Handwritten updates
+}
+
+# --- 4. HEADER SECTION ---
+st.markdown('<div class="m-stripe"></div>', unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="header-container">
+        <h1>⚪🔵🔴 BOWLA'S GARAGE</h1>
+        <p style="font-size: 18px; color: #aaa;">MECHANICAL SERVICES ESTIMATOR</p>
     </div>
     """, unsafe_allow_html=True)
 
-st.title("🛠️ Bowla's Garage Estimator")
-st.info("90C Red Hills Road | BMW Specialist")
+# --- 5. MAIN CONTENT (TWO COLUMNS) ---
+col1, col2 = st.columns(2, gap="large")
 
-# --- PRICING DATA (Official B58 & B48 Included) ---
-pricing_data = {
-    "N20 (4-Cylinder Turbo)": {
-        "oil": 15000, "oil_filter": 2800, "air_filter": 5000, "cabin_filter": 6000, "labour": 14500
-    },
-    "N55 (6-Cylinder Turbo)": {
-        "oil": 18000, "oil_filter": 2800, "air_filter": 5000, "cabin_filter": 6000, "labour": 14500
-    },
-    "B48 (New 4-Cylinder)": {
-        "oil": 18000, "oil_filter": 3500, "air_filter": 8000, "cabin_filter": 8000, "labour": 15500
-    },
-    "B58 (New 6-Cylinder)": {
-        "oil": 21000, "oil_filter": 5000, "air_filter": 8000, "cabin_filter": 8000, "labour": 15500
-    }
-}
-
-# --- INPUTS ---
-name = st.text_input("Customer Name")
-engine = st.selectbox("Select Engine", list(pricing_data.keys()))
-
-st.write("### Services")
-service_type = st.radio("Package", ["Basic (Oil & Filter)", "Full Service", "Custom"])
-
-selected = pricing_data[engine]
-do_oil, do_air, do_cabin = True, False, False
-
-if service_type == "Full Service":
-    do_air, do_cabin = True, True
-elif service_type == "Custom":
-    do_oil = st.checkbox("Oil & Filter", value=True)
-    do_air = st.checkbox("Air Filter")
-    do_cabin = st.checkbox("Cabin Filter")
-
-# --- MATH ---
-total = selected["labour"]
-items = ["Labour"]
-
-if do_oil:
-    total += selected["oil"] + selected["oil_filter"]
-    items.append("Oil/Filter")
-if do_air:
-    total += selected["air_filter"]
-    items.append("Air Filter")
-if do_cabin:
-    total += selected["cabin_filter"]
-    items.append("Cabin Filter")
-
-# --- DISPLAY ---
-st.markdown(f"""
-<div class="price-box">
-    <h2 style="margin:0;">Total: ${total:,} JMD</h2>
-    <p style="margin:0; opacity: 0.8;">Includes: {', '.join(items)}</p>
-</div>
-""", unsafe_allow_html=True)
-
-# --- WHATSAPP ---
-garage_phone = "1876XXXXXXX" # Put the number here
-
-message = f"Hello Bowla's Garage, my name is {name}. I'd like to book a service for my {engine}. Estimate: ${total:,} JMD."
-whatsapp_url = f"https://wa.me/{garage_phone}?text={message.replace(' ', '%20')}"
-
-if st.button("Book via WhatsApp"):
-    if name:
-        st.markdown(f'<meta http-equiv="refresh" content="0;URL={whatsapp_url}">', unsafe_allow_html=True)
+with col1:
+    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
+    st.subheader("🛠️ SERVICE ESTIMATOR")
+    
+    brand = st.selectbox("1. Select Vehicle Brand", ["BMW", "Audi", "Mercedes-Benz"])
+    engine = st.selectbox("2. Select Engine Type", ["N20", "N55", "B48", "B58"])
+    tier = st.selectbox("3. Select Service Tier", ["Basic F30", "Regular F30"])
+    
+    # Calculate Price
+    total_price = pricing_data[engine][tier]
+    
+    st.write("ESTIMATED STARTING AT:")
+    st.markdown(f'<p class="price-display">${total_price:,.0f} JMD</p>', unsafe_allow_html=True)
+    
+    # Package details display
+    if tier == "Basic F30":
+        st.info("Includes: 5-7qrts Oil, Oil Filter, Cabin Filter, Labor.")
     else:
-        st.error("Please enter your name first.")
+        st.info("Includes: 5-7qrts Oil, Oil Filter, Air Filter, Cabin Filter, Labor.")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with col2:
+    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
+    st.subheader("📅 BOOK APPOINTMENT")
+    
+    name = st.text_input("Customer Name", placeholder="Enter your name")
+    v_model = st.text_input("Vehicle Model", placeholder="e.g. 2018 340i")
+    phone = st.text_input("Your Phone Number")
+    
+    st.write("") # Spacer
+    
+    if st.button("SEND BOOKING TO WHATSAPP ✅"):
+        if name and v_model:
+            message = f"Hi Bowla's Garage, my name is {name}. I'd like to book a {tier} for my {v_model} ({engine}). Estimated price: ${total_price:,.0f} JMD."
+            # Note: Replace the number below with Bowla's actual WhatsApp number
+            whatsapp_url = f"https://wa.me/18765551234?text={message.replace(' ', '%20')}"
+            st.markdown(f'<meta http-equiv="refresh" content="0;URL={whatsapp_url}">', unsafe_allow_html=True)
+            st.success("Redirecting to WhatsApp...")
+        else:
+            st.error("Please fill in your Name and Model.")
+            
+    st.markdown("""
+        <div style="margin-top: 20px;">
+            <a href="https://instagram.com/bowlasgarageltd" target="_blank" style="text-decoration:none;">
+                <button style="width:100%; background-color:#333; color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;">
+                    FOLLOW @BOWLASGARAGELTD 📸
+                </button>
+            </a>
+        </div>
+    """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# --- 6. FOOTER SECTION ---
+st.markdown(f"""
+    <div class="footer">
+        📍 Address: 90c Red Hills Road, Kingston<br>
+        📞 Phone: +1 (876) 4972031 | 📸 Instagram: @bowlasgarageltd
+    </div>
+    """, unsafe_allow_html=True)
