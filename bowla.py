@@ -98,7 +98,7 @@ with col2:
             selected_str = ", ".join(items_selected)
             message = f"Hi Bowla! I'm {u_name}. I want to book {selected_str} for my {u_model} ({selected_engine}). Total: ${total:,.0f} JMD."
             # Business WhatsApp Link (Replace with real number)
-            wa_link = f"https://wa.me/18765551234?text={message.replace(' ', '%20')}"
+            wa_link = f"https://wa.me/18764972031?text={message.replace(' ', '%20')}"
             st.markdown(f'<meta http-equiv="refresh" content="0;URL={wa_link}">', unsafe_allow_html=True)
         else:
             st.error("Please enter your name and vehicle model.")
