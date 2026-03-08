@@ -76,5 +76,5 @@ with col2:
     if st.button("MESSAGE ON WHATSAPP ✅"):
         if name and model:
             msg = f"Hi Bowla! My name is {name}. I'd like to book a {tier} for my {model} ({selected_engine}). Total: ${final_price:,.0f} JMD.".replace(" ", "%20")
-            st.markdown(f'<meta http-equiv="refresh" content="0;URL=https://wa.me/18765551234?text={msg}">', unsafe_allow_html=True)
+            st.markdown(f'<meta http-equiv="refresh" content="0;URL=https://wa.me/18764972031?text={msg}">', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
