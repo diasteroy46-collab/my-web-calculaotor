@@ -1,120 +1,98 @@
 import streamlit as st
 
-# 1. Page Configuration
-st.set_page_config(page_title="Bowla's Garage | BMW Specialist", page_icon="🏎️", layout="wide")
+# --- PAGE CONFIG ---
+st.set_page_config(page_title="Bowla's Garage", page_icon="🚗", layout="wide")
 
-# 2. Elite M-Performance Styling (Original Flawless Look)
+# --- CSS FOR THE EXACT LOOK ---
 st.markdown("""
     <style>
-    .stApp { background-color: #000000; color: #ffffff; }
-    
-    /* The M-Stripe at the top */
-    [data-testid="stAppViewContainer"] {
-        border-top: 15px solid;
-        border-image: linear-gradient(to right, #5da9e1 33%, #003399 33% 66%, #ff0000 66%) 1;
+    .stApp { background-color: #050505; color: white; }
+    .m-stripe {
+        height: 6px;
+        width: 100%;
+        background: linear-gradient(90deg, #0033ad 0%, #0033ad 33%, #000000 33%, #000000 66%, #ff0000 66%, #ff0000 100%);
+        margin-bottom: 20px;
     }
-
-    /* Centering the Header */
-    .header-container { text-align: center; padding-bottom: 20px; }
-
-    /* Dark Card styling for the two columns */
-    [data-testid="stVerticalBlock"] > div > div > div > div.stVerticalBlock {
-        background-color: #121212 !important;
-        padding: 30px !important;
-        border-radius: 20px !important;
-        border: 1px solid #333 !important;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .custom-card {
+        background-color: #111111;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #222;
+        margin-bottom: 15px;
     }
-
-    h1, h2, h3, p, span, label { color: white !important; }
-    .stSelectbox label, .stTextInput label { color: #888 !important; font-weight: bold; }
-    
-    .footer-text { text-align: center; color: #555 !important; margin-top: 30px; }
+    .price-text {
+        color: #4da3ff;
+        font-size: 38px;
+        font-weight: bold;
+        margin: 0;
+    }
+    .part-list {
+        font-size: 14px;
+        color: #aaaaaa;
+        line-height: 1.6;
+    }
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_content_safe=True)
 
-# 3. Centered Header: Logo + Name + Address
-st.markdown("""
-    <div class="header-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" width="80">
-        <h1 style="margin-top: 10px; font-size: 3em;">BOWLA'S GARAGE LTD</h1>
-        <p style="color: #888 !important; font-size: 1.2em;">🏁 BMW M-Performance Specialist</p>
-        <p style="color: #5da9e1 !important;">📍 90C Red Hills Rd, Kingston 19</p>
-    </div>
-""", unsafe_allow_html=True)
-
-st.divider()
-
-# 4. Smart Pricing Database (Including Towing)
-pricing_data = {
-    "Engine Tuning": {"M2": 30000, "M3": 35000, "M4": 35000, "M5": 40000, "M6": 40000, "X5M": 45000},
-    "Oil Change (Synthetic)": {"M2": 15000, "M3": 18000, "M4": 18000, "M5": 22000, "M6": 22000, "X5M": 25000},
-    "Brake Overhaul": {"M2": 25000, "M3": 28000, "M4": 28000, "M5": 35000, "M6": 35000, "X5M": 38000},
-    "Towing Service": {"M2": 12000, "M3": 12000, "M4": 12000, "M5": 15000, "M6": 15000, "X5M": 18000},
-    "Computer Diagnostics": {"M2": 5500, "M3": 5500, "M4": 5500, "M5": 5500, "M6": 5500, "X5M": 5500}
+# --- THE CORRECT DATA FROM YOUR SHEET ---
+# Breaking it down so we can show the user what they are paying for
+parts_prices = {
+    "N20": {"oil": 12500, "filter": 2800, "cabin": 5000, "air": 7500, "labor": 12500},
+    "N55": {"oil": 15500, "filter": 2800, "cabin": 5000, "air": 10500, "labor": 12500},
+    "B48": {"oil": 12500, "filter": 4500, "cabin": 10000, "air": 5500, "labor": 12500},
+    "B58": {"oil": 15500, "filter": 3500, "cabin": 12500, "air": 13500, "labor": 12500}
 }
 
-# 5. The Estimator UI (Dropdown Logic)
-col_left, col_right = st.columns(2, gap="large")
+st.markdown('<div class="m-stripe"></div>', unsafe_content_safe=True)
+st.title("🔧 Bowla's Garage")
+st.subheader("Specializing in German Cars: BMW • Audi • Mercedes-Benz")
 
-with col_left:
-    st.subheader("🛠️ SERVICE ESTIMATOR")
-    service_choice = st.selectbox("Select Service Required", list(pricing_data.keys()))
-    
-    # Logic to filter car list based on service
-    available_models = list(pricing_data[service_choice].keys())
-    model_choice = st.selectbox("Select Your BMW Model", available_models)
-    
-    price = pricing_data[service_choice][model_choice]
+col1, col2 = st.columns(2)
 
-    # M-Bordered Price Box
-    st.markdown(f"""
-        <div style="background-color: #000; padding: 25px; border-radius: 15px; border-left: 5px solid #0066ff; border-right: 5px solid #ff0000; text-align: center; margin-top: 20px;">
-            <p style="color: #888; margin: 0;">ESTIMATED COST</p>
-            <h1 style="color: #0066ff; margin: 0; font-size: 45px;">${price:,} JMD</h1>
-        </div>
-    """, unsafe_allow_html=True)
-
-with col_right:
-    st.subheader("📅 BOOK APPOINTMENT")
-    customer_name = st.text_input("Customer Name", placeholder="e.g. John Brown")
-    st.write("Secure your slot by sending this estimate to Bowla via WhatsApp.")
+with col1:
+    st.markdown('<div class="custom-card">', unsafe_content_safe=True)
+    st.header("🛠️ SERVICE ESTIMATOR")
     
-    # WhatsApp URL Construction
-    phone_number = "18765105118" 
-    name_str = f"Hi Bowla, my name is {customer_name}." if customer_name else "Hi Bowla,"
-    message = f"{name_str} I'd like to book a {service_choice} for my BMW {model_choice}. Estimate: ${price:,} JMD."
-    whatsapp_url = f"https://wa.me/{phone_number}?text={message.replace(' ', '%20')}"
+    brand = st.selectbox("Vehicle Brand", ["BMW", "Audi", "Mercedes-Benz"])
+    engine = st.selectbox("Engine Type", ["N20", "N55", "B48", "B58"])
+    tier = st.radio("Service Tier", ["Basic F30", "Regular F30"], horizontal=True)
     
-    # WhatsApp Button
-    st.markdown(f'''
-        <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
-            <div style="background-color: #25D366; color: white; padding: 18px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 18px; cursor: pointer; margin-top: 15px;">
-                🚀 SEND TO WHATSAPP
-            </div>
-        </a>
-    ''', unsafe_allow_html=True)
+    # Calculation Logic
+    data = parts_prices[engine]
+    if tier == "Basic F30":
+        # Oil + Filter + Cabin + Labor
+        total = data['oil'] + data['filter'] + data['cabin'] + data['labor']
+        items = ["Oil Change", "Oil Filter", "Cabin Filter", "Service Labor"]
+    else:
+        # Basic + Air Filter
+        total = data['oil'] + data['filter'] + data['cabin'] + data['air'] + data['labor']
+        items = ["Oil Change", "Oil Filter", "Cabin Filter", "Air Filter", "Service Labor"]
+
+    st.write("STARTING AT")
+    st.markdown(f'<p class="price-text">${total:,.0f} JMD</p>', unsafe_content_safe=True)
     
-    # Instagram Button
-    st.markdown('''
-        <a href="https://instagram.com" target="_blank" style="text-decoration: none;">
-            <div style="background-color: #1a1a1a; color: white; border: 1px solid #333; padding: 12px; border-radius: 10px; text-align: center; margin-top: 10px; font-size: 14px;">
-                📸 FOLLOW US ON INSTAGRAM
-            </div>
-        </a>
-    ''', unsafe_allow_html=True)
+    st.markdown('<div class="part-list">', unsafe_content_safe=True)
+    st.write("📦 **Package Includes:**")
+    for item in items:
+        st.write(f"• {item}")
+    st.markdown('</div>', unsafe_content_safe=True)
+    st.markdown('</div>', unsafe_content_safe=True)
 
-# 6. Opening Hours & Footer
-st.divider()
-col_f1, col_f2, col_f3 = st.columns(3)
-with col_f2:
-    st.markdown("""
-        <div style="text-align: center; background-color: #111; padding: 20px; border-radius: 15px;">
-            <h4 style="color: #5da9e1 !important; margin-bottom: 10px;">⏰ OPENING HOURS</h4>
-            <p style="margin: 2px;">Mon - Fri: 8:30 AM - 5:30 PM</p>
-            <p style="margin: 2px;">Sat: 9:00 AM - 3:00 PM</p>
-            <p style="margin: 2px;">Sun: Closed</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-st.markdown('<p class="footer-text">© 2026 Bowla\'s Garage Ltd | Kingston, Jamaica</p>', unsafe_allow_html=True)
+with col2:
+    st.markdown('<div class="custom-card">', unsafe_content_safe=True)
+    st.header("📅 BOOK NOW")
+    
+    name = st.text_input("Your Name")
+    model = st.text_input("Vehicle Model (e.g. 2014 328i)")
+    
+    if st.button("SEND TO WHATSAPP ✅"):
+        if name and model:
+            msg = f"Hi Bowla! My name is {name}. I'd like to book a {tier} for my {brand} {model} ({engine}). Estimate: ${total:,.0f} JMD."
+            wa_link = f"https://wa.me/1876XXXXXXX?text={msg.replace(' ', '%20')}"
+            st.markdown(f'<meta http-equiv="refresh" content="0;URL={wa_link}">', unsafe_content_safe=True)
+        else:
+            st.error("Please enter your name and vehicle model.")
+            
+    st.write("")
+    st.markdown('<a href="https://instagram.com/bowlasgarageltd" target="_blank"><button style="width:100%; padding:12px; border-radius:8px; background-color:#2d323e; color:white; border:none; cursor:pointer;">FOLLOW @BOWLASGARAGELTD 📸</button></a>', unsafe_content_safe=True)
+    st.markdown('</div>', unsafe_content_safe=True)
