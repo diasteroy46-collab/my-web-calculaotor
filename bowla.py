@@ -8,24 +8,46 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- BMW M-STRIPES & TABLE STYLING ---
+# --- THE G80 BACKGROUND & BMW M-STRIPES ---
 st.markdown("""
     <style>
-    .m-stripe { 
-        height: 10px; 
-        width: 100%; 
-        display: flex; 
-        margin-bottom: 20px; 
+    /* THE G80 M3 BACKGROUND */
+    .stApp {
+        background-image: url("https://images.unsplash.com/photo-1617814076367-b759c7d7e738");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    /* Dark overlay so the car looks mean but text is 100% readable */
+    .stApp::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.82); 
+        z-index: -1;
+    }
+
+    /* Official M-Stripe logic */
+    .m-stripe {
+        height: 12px;
+        width: 100%;
+        display: flex;
+        margin-bottom: 25px;
     }
     .m-blue { background-color: #0033AD; flex: 1; }
     .m-dark-blue { background-color: #001C57; flex: 1; }
     .m-red { background-color: #E7222E; flex: 1; }
     
-    /* Ensuring the price tables look clean */
-    .stTable {
-        width: 100%;
+    /* Ensuring all text and tables pop in White */
+    h1, h2, h3, p, span, .stMarkdown, .stTable td, .stTable th {
+        color: white !important;
     }
     </style>
+    
     <div class="m-stripe">
         <div class="m-blue"></div>
         <div class="m-dark-blue"></div>
@@ -40,9 +62,10 @@ with col_logo:
 with col_title:
     st.title("Bowla's Garage Service Menu")
 
-st.info("BMW Specialist | 90C Red Hills Road")
+st.write("### BMW Specialist | 90C Red Hills Road")
+st.markdown("---")
 
-# --- BASIC SERVICE TABLE (Exact Data from Sheet) ---
+# --- BASIC SERVICE TABLE ---
 st.write("### 🔹 BASIC F30 (Oil & Filter Only)")
 basic_data = {
     "Item": ["5-7qrts Oil", "Oil Filter", "Labour", "TOTAL"],
@@ -53,7 +76,7 @@ basic_data = {
 }
 st.table(pd.DataFrame(basic_data))
 
-# --- REGULAR SERVICE TABLE (Exact Data from Sheet) ---
+# --- REGULAR SERVICE TABLE ---
 st.write("### 🔸 REGULAR F30 (Full Service)")
 reg_data = {
     "Item": ["Air Filter", "Cabin Filter", "Labour", "TOTAL"],
@@ -68,24 +91,19 @@ st.markdown("---")
 
 # --- WHATSAPP BOOKING SECTION ---
 st.write("### 📅 Book an Appointment")
-customer_name = st.text_input("Enter your name", placeholder="e.g. JOHN DOE")
-car_model = st.text_input("Car Model", placeholder="e.g. 335i, M240i")
+customer_name = st.text_input("Enter your name")
+car_model = st.text_input("Car Model (e.g. M340i)")
 
-# REPLACE THE X's WITH THE ACTUAL GARAGE NUMBER (No dashes)
+# Replace with the official garage number (e.g. 18761234567)
 garage_phone = "18764972031" 
 
-# Prepare the message and URL
-msg = f"Hello Bowla's Garage, my name is {customer_name}. I would like to book a service for my {car_model} after seeing your online price list."
-whatsapp_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
+msg = f"Hello Bowla's Garage, my name is {customer_name}. I'd like to book a service for my {car_model}."
+wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
 
-st.markdown("<br>", unsafe_allow_html=True)
-
-# THE FIX: This button avoids the "Refused to Connect" error
 if customer_name and car_model:
-    st.link_button("🟢 Message on WhatsApp", whatsapp_url, use_container_width=True)
+    st.link_button("🟢 Message on WhatsApp", wa_url, use_container_width=True)
 else:
-    # This shows a greyed-out button until they fill in their name/car
-    st.button("Enter name and car to message WhatsApp", disabled=True, use_container_width=True)
+    st.button("Message on WhatsApp (Enter details first)", disabled=True, use_container_width=True)
 
 st.markdown("---")
 st.caption("Prices are estimates and subject to parts availability. © 2026 Bowla's Garage")
