@@ -1,108 +1,74 @@
 import streamlit as st
+import pandas as pd
 
-# --- 1. PAGE CONFIG ---
-st.set_page_config(page_title="Bowla's Garage Ltd", page_icon="🚗", layout="wide")
+# --- PAGE CONFIG (Keep it centered for mobile) ---
+st.set_page_config(
+    page_title="Bowla's Garage | BMW Specialist",
+    page_icon="🏎️",
+    layout="centered"
+)
 
-# --- 2. PREMIUM CSS ---
+# --- M-STRIPE CSS (Original Clean Layout) ---
 st.markdown("""
-<style>
-    .stApp { background-color: #050505; color: white; }
+    <style>
     .m-stripe {
-        height: 10px; width: 100%;
-        background: linear-gradient(90deg, #0033ad 0%, #0033ad 33%, #000000 33%, #000000 66%, #ff0000 66%, #ff0000 100%);
-        margin-bottom: 20px;
-    }
-    /* Logo and Header Styling */
-    .header-box {
-        background-color: #111111;
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #222;
+        height: 10px;
+        width: 100%;
         display: flex;
-        align-items: center;
         margin-bottom: 20px;
     }
-    .custom-card {
-        background-color: #111111;
-        padding: 25px;
-        border-radius: 15px;
-        border: 1px solid #222;
-        min-height: 520px;
+    .m-blue { background-color: #0033AD; flex: 1; }
+    .m-dark-blue { background-color: #001C57; flex: 1; }
+    .m-red { background-color: #E7222E; flex: 1; }
+    
+    /* Table Styling for better mobile reading */
+    .stTable {
+        font-size: 16px;
     }
-    .price-text { color: #4da3ff; font-size: 42px; font-weight: bold; margin: 10px 0; }
-</style>
-""", unsafe_allow_html=True)
+    </style>
+    <div class="m-stripe">
+        <div class="m-blue"></div>
+        <div class="m-dark-blue"></div>
+        <div class="m-red"></div>
+    </div>
+    """, unsafe_allow_html=True)
 
-# --- 3. THE DATA ---
-engines = {
-    "N20": {"oil": 15000, "oil_filter": 2800, "air_filter": 5000, "cabin_filter": 6000, "labor": 14500},
-    "N55": {"oil": 18000, "oil_filter": 2800, "air_filter": 5000, "cabin_filter": 6000, "labor": 14500},
-    "B48": {"oil": 18000, "oil_filter": 3500, "air_filter": 8000, "cabin_filter": 8000, "labor": 15500},
-    "B58": {"oil": 21000, "oil_filter": 5000, "air_filter": 8000, "cabin_filter": 8000, "labor": 15500}
+st.title("🛠️ Bowla's Garage")
+st.write("### BMW Specialist | 90C Red Hills Road")
+
+st.markdown("---")
+st.write("## 📜 Official Service Pricing (JMD)")
+
+# --- DATA FROM SECRETARY'S LIST ---
+# Grouped by Basic vs Regular just like her sheet
+pricing_data = {
+    "Service Item": ["Oil filter", "Air filter", "Labour", "---", "TOTAL"],
+    "N20": ["$2,800", "$5,000", "$14,500", "---", "$43,300"],
+    "N55": ["$2,800", "$5,000", "$14,500", "---", "$46,300"],
+    "B48": ["$3,500", "$8,000", "$15,500", "---", "$53,000"],
+    "B58": ["$5,000", "$8,000", "$15,500", "---", "$57,500"]
 }
 
-# --- 4. TOP BAR & LOGO HEADER ---
-st.markdown('<div class="m-stripe"></div>', unsafe_allow_html=True)
+df = pd.DataFrame(pricing_data)
+st.table(df)
 
-# Header with Logo
-head_col1, head_col2 = st.columns([1, 4])
-with head_col1:
-    # This uses a standard BMW logo link
-    st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", width=100)
-with head_col2:
-    st.markdown("## BOWLA'S GARAGE LTD")
-    st.markdown("📍 **90C Red Hills Rd, Kingston 19**")
+st.markdown("---")
 
-# --- 5. THE SIDE-BY-SIDE COLUMNS ---
-col1, col2 = st.columns(2, gap="large")
+# --- CLEAN BOOKING SECTION ---
+st.write("### 📅 Book an Appointment")
+name = st.text_input("Customer Name")
+car = st.text_input("Car Model (e.g. 320i, M140i)")
 
-with col1:
-    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.subheader("🛠️ SERVICE ESTIMATOR")
-    
-    selected_engine = st.selectbox("1. Select Engine Type", list(engines.keys()))
-    st.write("2. Select Required Items:")
-    
-    data = engines[selected_engine]
-    
-    # Checkboxes for full control
-    inc_oil = st.checkbox(f"Engine Oil (${data['oil']:,.0f})", value=True)
-    inc_filter = st.checkbox(f"Oil Filter (${data['oil_filter']:,.0f})", value=True)
-    inc_cabin = st.checkbox(f"Cabin Filter (${data['cabin_filter']:,.0f})", value=True)
-    inc_air = st.checkbox(f"Air Filter (${data['air_filter']:,.0f})", value=False)
-    inc_labor = st.checkbox(f"Labor (${data['labor']:,.0f})", value=True)
-    
-    # Calculation
-    total = 0
-    items_selected = []
-    if inc_oil: total += data['oil']; items_selected.append("Oil")
-    if inc_filter: total += data['oil_filter']; items_selected.append("Oil Filter")
-    if inc_cabin: total += data['cabin_filter']; items_selected.append("Cabin Filter")
-    if inc_air: total += data['air_filter']; items_selected.append("Air Filter")
-    if inc_labor: total += data['labor']; items_selected.append("Labor")
+# UPDATE THIS NUMBER TO THE OFFICIAL GARAGE LINE
+garage_phone = "1876XXXXXXX" 
 
-    st.markdown(f'<p class="price-text">${total:,.0f} JMD</p>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+msg = f"Hi Bowla's Garage, I'm {name}. I saw the price list for my {car} and I'd like to book a service."
+wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
 
-with col2:
-    st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-    st.subheader("📅 BOOK APPOINTMENT")
-    
-    u_name = st.text_input("Customer Name", value="Teroy")
-    u_model = st.text_input("Vehicle Model (e.g. BMW M3)")
-    
-    st.write("") 
-    
-    if st.button("SEND TO WHATSAPP ✅"):
-        if u_name and u_model:
-            selected_str = ", ".join(items_selected)
-            message = f"Hi Bowla! I'm {u_name}. I want to book {selected_str} for my {u_model} ({selected_engine}). Total: ${total:,.0f} JMD."
-            # Business WhatsApp Link (Replace with real number)
-            wa_link = f"https://wa.me/18764972031?text={message.replace(' ', '%20')}"
-            st.markdown(f'<meta http-equiv="refresh" content="0;URL={wa_link}">', unsafe_allow_html=True)
-        else:
-            st.error("Please enter your name and vehicle model.")
+if st.button("Message on WhatsApp"):
+    if name and car:
+        st.markdown(f'<meta http-equiv="refresh" content="0;URL={wa_url}">', unsafe_allow_html=True)
+    else:
+        st.error("Please enter your name and car model.")
 
-    st.write("---")
-    st.markdown('<a href="https://instagram.com/bowlasgarageltd" target="_blank"><button style="width:100%; padding:10px; border-radius:10px; background-color:#2d323e; color:white; border:none; cursor:pointer; font-weight:bold;">FOLLOW US ON INSTAGRAM 📸</button></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+st.info("Note: Prices include oil and parts as per the official 2026 service menu.")
