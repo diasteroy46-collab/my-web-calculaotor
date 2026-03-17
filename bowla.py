@@ -1,25 +1,48 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Bowla's Garage", page_icon="🏎️", layout="centered")
+# --- PAGE CONFIG ---
+st.set_page_config(
+    page_title="Bowla's Garage | BMW Specialist",
+    page_icon="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg",
+    layout="centered"
+)
 
-# --- BMW M-STRIPES ---
+# --- BMW M-STRIPES & TABLE STYLING ---
 st.markdown("""
     <style>
-    .m-stripe { height: 10px; width: 100%; display: flex; margin-bottom: 20px; }
+    .m-stripe { 
+        height: 10px; 
+        width: 100%; 
+        display: flex; 
+        margin-bottom: 20px; 
+    }
     .m-blue { background-color: #0033AD; flex: 1; }
     .m-dark-blue { background-color: #001C57; flex: 1; }
     .m-red { background-color: #E7222E; flex: 1; }
+    
+    /* Ensuring the price tables look clean */
+    .stTable {
+        width: 100%;
+    }
     </style>
     <div class="m-stripe">
-        <div class="m-blue"></div><div class="m-dark-blue"></div><div class="m-red"></div>
+        <div class="m-blue"></div>
+        <div class="m-dark-blue"></div>
+        <div class="m-red"></div>
     </div>
     """, unsafe_allow_html=True)
 
-st.title("🛠️ Bowla's Garage Service Menu")
+# --- HEADER WITH BMW LOGO ---
+col_logo, col_title = st.columns([1, 5])
+with col_logo:
+    st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", width=70)
+with col_title:
+    st.title("Bowla's Garage Service Menu")
+
 st.info("BMW Specialist | 90C Red Hills Road")
 
-# --- BASIC SERVICE TABLE ---
+# --- BASIC SERVICE TABLE (Exact Data from Sheet) ---
 st.write("### 🔹 BASIC F30 (Oil & Filter Only)")
 basic_data = {
     "Item": ["5-7qrts Oil", "Oil Filter", "Labour", "TOTAL"],
@@ -30,7 +53,7 @@ basic_data = {
 }
 st.table(pd.DataFrame(basic_data))
 
-# --- REGULAR SERVICE TABLE ---
+# --- REGULAR SERVICE TABLE (Exact Data from Sheet) ---
 st.write("### 🔸 REGULAR F30 (Full Service)")
 reg_data = {
     "Item": ["Air Filter", "Cabin Filter", "Labour", "TOTAL"],
@@ -42,4 +65,24 @@ reg_data = {
 st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
-# Booking section remains the same...
+
+# --- WHATSAPP BOOKING SECTION ---
+st.write("### 📅 Book an Appointment")
+customer_name = st.text_input("Enter your name", placeholder="e.g. Teroy")
+car_model = st.text_input("Car Model", placeholder="e.g. 335i, M240i")
+
+# Replace with the official garage number (e.g., 18765551234)
+garage_phone = "18764972031" 
+
+msg = f"Hello Bowla's Garage, my name is {customer_name}. I would like to book a service for my {car_model} after seeing your online price list."
+whatsapp_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
+
+if st.button("Message on WhatsApp"):
+    if customer_name and car_model:
+        # Opens WhatsApp in a new tab
+        st.markdown(f'<meta http-equiv="refresh" content="0;URL={whatsapp_url}">', unsafe_allow_html=True)
+    else:
+        st.warning("Please enter your name and car model to book.")
+
+st.markdown("---")
+st.caption("Prices are estimates and subject to parts availability. © 2026 Bowla's Garage")
