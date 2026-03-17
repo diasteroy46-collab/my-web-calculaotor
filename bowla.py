@@ -68,21 +68,24 @@ st.markdown("---")
 
 # --- WHATSAPP BOOKING SECTION ---
 st.write("### 📅 Book an Appointment")
-customer_name = st.text_input("Enter your name", placeholder="e.g. Teroy")
+customer_name = st.text_input("Enter your name", placeholder="e.g. JOHN DOE")
 car_model = st.text_input("Car Model", placeholder="e.g. 335i, M240i")
 
-# Replace with the official garage number (e.g., 18765551234)
+# REPLACE THE X's WITH THE ACTUAL GARAGE NUMBER (No dashes)
 garage_phone = "18764972031" 
 
+# Prepare the message and URL
 msg = f"Hello Bowla's Garage, my name is {customer_name}. I would like to book a service for my {car_model} after seeing your online price list."
 whatsapp_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
 
-if st.button("Message on WhatsApp"):
-    if customer_name and car_model:
-        # Opens WhatsApp in a new tab
-        st.markdown(f'<meta http-equiv="refresh" content="0;URL={whatsapp_url}">', unsafe_allow_html=True)
-    else:
-        st.warning("Please enter your name and car model to book.")
+st.markdown("<br>", unsafe_allow_html=True)
+
+# THE FIX: This button avoids the "Refused to Connect" error
+if customer_name and car_model:
+    st.link_button("🟢 Message on WhatsApp", whatsapp_url, use_container_width=True)
+else:
+    # This shows a greyed-out button until they fill in their name/car
+    st.button("Enter name and car to message WhatsApp", disabled=True, use_container_width=True)
 
 st.markdown("---")
 st.caption("Prices are estimates and subject to parts availability. © 2026 Bowla's Garage")
