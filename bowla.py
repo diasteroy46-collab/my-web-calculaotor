@@ -74,29 +74,35 @@ st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
 
-# --- WHATSAPP SECTION ---
-st.write("### 📅 Book an Appointment")
-customer_name = st.text_input("Enter your name")
-car_model = st.text_input("Car Model (e.g. M340i)")
+# --- CONTACT & SOCIALS ---
+st.write("### 📍 Location & Socials")
 
-# Replace with the real number (e.g., 18765551234)
-garage_phone = "18764972031" 
-# Replace with the real IG handle (e.g., bowlas_garage)
-ig_handle = "bowlas_garage" 
+# Official Garage Details
+garage_phone = "18764972031" # Replace with Bowla's real number
+ig_handle = "bowlas_garage" # Replace with real IG handle
+# Official Google Maps link for 90C Red Hills Road
+google_maps_url = "https://www.google.com/maps/search/?api=1&query=Bowlas+Garage+Ltd+90c+Red+Hills+Rd+Kingston"
 
-if customer_name and car_model:
-    msg = f"Hello Bowla's Garage, my name is {customer_name}. I'd like to book a service for my {car_model}."
-    wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
-    st.link_button("🟢 Message on WhatsApp", wa_url, use_container_width=True)
-else:
-    st.button("Message on WhatsApp (Enter details first)", disabled=True, use_container_width=True)
+# Three Clean Buttons (WhatsApp, Instagram, and Map)
+col1, col2, col3 = st.columns(3)
 
-# Instagram Button
-st.link_button(f"📸 Follow @{ig_handle} on Instagram", f"https://instagram.com/{ig_handle}", use_container_width=True)
+with col1:
+    if customer_name and car_model:
+        msg = f"Hello Bowla's Garage, my name is {customer_name}. I'd like to book for my {car_model}."
+        wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
+        st.link_button("🟢 WhatsApp", wa_url, use_container_width=True)
+    else:
+        st.button("🟢 WhatsApp", disabled=True, use_container_width=True)
+
+with col2:
+    st.link_button("📸 Instagram", f"https://instagram.com/{ig_handle}", use_container_width=True)
+
+with col3:
+    st.link_button("📍 View Map", google_maps_url, use_container_width=True)
 
 st.markdown("---")
 
-# --- THE ESTIMATE REMINDER & FOOTER ---
+# --- THE ESTIMATE REMINDER ---
 st.warning("""
 **Please Note:** All prices listed are **estimates** based on current market rates for parts and fluids. 
 Final pricing may vary depending on parts availability or additional work required.
