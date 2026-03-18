@@ -5,27 +5,15 @@ import pandas as pd
 st.set_page_config(
     page_title="Bowla's Garage | BMW Specialist",
     page_icon="🏎️",
-    layout="centered"  # Back to centered for better readability
+    layout="centered"
 )
 
-# --- BMW M-STRIPES & BACKGROUND STYLE ---
+# --- BMW M-STRIPES & CLEAN STYLING ---
 st.markdown("""
     <style>
-    /* THE BACKGROUND - Visible but darkened */
+    /* Professional Dark Theme */
     .stApp {
-        background-image: url("https://images.unsplash.com/photo-1627883584732-f2df2df555f3");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
-
-    /* Dark overlay to make white text pop without hiding the car */
-    .stApp::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.7); /* 0.7 is the sweet spot for visibility */
-        z-index: -1;
+        background-color: #0E1117;
     }
 
     /* M-Stripe logic */
@@ -39,10 +27,9 @@ st.markdown("""
     .m-dark-blue { background-color: #001C57; flex: 1; }
     .m-red { background-color: #E7222E; flex: 1; }
     
-    /* Ensure all text is Bright White */
-    h1, h2, h3, p, span, .stMarkdown, .stTable td, .stTable th {
+    /* Ensure all text is crisp and clear */
+    h1, h2, h3, p, span, .stMarkdown {
         color: white !important;
-        text-shadow: 1px 1px 2px black; /* Adds a tiny shadow to make text sharp */
     }
     </style>
     
@@ -53,14 +40,14 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
-# --- HEADER ---
+# --- HEADER WITH BMW LOGO ---
 col_logo, col_title = st.columns([1, 5])
 with col_logo:
     st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", width=70)
 with col_title:
     st.title("Bowla's Garage Service Menu")
 
-st.write("### BMW Specialist | 90C Red Hills Road")
+st.info("📍 BMW Specialist | 90C Red Hills Road")
 st.markdown("---")
 
 # --- BASIC SERVICE TABLE ---
@@ -87,12 +74,12 @@ st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
 
-# --- WHATSAPP SECTION ---
+# --- WHATSAPP BOOKING SECTION ---
 st.write("### 📅 Book an Appointment")
 customer_name = st.text_input("Enter your name")
 car_model = st.text_input("Car Model (e.g. M340i)")
 
-# Replace with the real number
+# Put the real phone number here (e.g., 18765551234)
 garage_phone = "18764972031" 
 
 if customer_name and car_model:
@@ -102,4 +89,12 @@ if customer_name and car_model:
 else:
     st.button("Message on WhatsApp (Enter details first)", disabled=True, use_container_width=True)
 
-st.caption("© 2026 Bowla's Garage")
+st.markdown("---")
+
+# --- THE ESTIMATE REMINDER ---
+st.warning("""
+**Please Note:** All prices listed are **estimates** based on current market rates for parts and fluids. 
+Final pricing may vary depending on parts availability, specific vehicle requirements, or additional work requested.
+""", icon="⚠️")
+
+st.caption("© 2026 Bowla's Garage | BMW Specialist Kingston")
