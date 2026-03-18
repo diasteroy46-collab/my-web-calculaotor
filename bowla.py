@@ -5,22 +5,27 @@ import pandas as pd
 st.set_page_config(
     page_title="Bowla's Garage | BMW Specialist",
     page_icon="🏎️",
-    layout="wide" 
+    layout="centered"  # Back to centered for better readability
 )
 
-# --- STEALTH G80 BACKGROUND & TABLE STYLING ---
+# --- BMW M-STRIPES & BACKGROUND STYLE ---
 st.markdown("""
     <style>
-    /* Pure black background for maximum readability */
+    /* THE BACKGROUND - Visible but darkened */
     .stApp {
-        background-color: #000000;
-        background-image: 
-            linear-gradient(90deg, #000000 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%),
-            url("https://images.unsplash.com/photo-1627883584732-f2df2df555f3"); 
-        background-size: auto, cover;
-        background-position: left, right center;
-        background-repeat: no-repeat;
+        background-image: url("https://images.unsplash.com/photo-1627883584732-f2df2df555f3");
+        background-size: cover;
+        background-position: center;
         background-attachment: fixed;
+    }
+
+    /* Dark overlay to make white text pop without hiding the car */
+    .stApp::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.7); /* 0.7 is the sweet spot for visibility */
+        z-index: -1;
     }
 
     /* M-Stripe logic */
@@ -34,16 +39,10 @@ st.markdown("""
     .m-dark-blue { background-color: #001C57; flex: 1; }
     .m-red { background-color: #E7222E; flex: 1; }
     
-    /* High-contrast white text */
+    /* Ensure all text is Bright White */
     h1, h2, h3, p, span, .stMarkdown, .stTable td, .stTable th {
         color: white !important;
-        font-family: 'Arial', sans-serif;
-    }
-
-    /* Table styling for dark mode */
-    .stTable {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
+        text-shadow: 1px 1px 2px black; /* Adds a tiny shadow to make text sharp */
     }
     </style>
     
@@ -55,51 +54,52 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- HEADER ---
-col_logo, col_title = st.columns([1, 6])
+col_logo, col_title = st.columns([1, 5])
 with col_logo:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", width=60)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", width=70)
 with col_title:
     st.title("Bowla's Garage Service Menu")
 
 st.write("### BMW Specialist | 90C Red Hills Road")
 st.markdown("---")
 
-# --- TABLES ---
-col_content, col_spacer = st.columns([3, 2])
-with col_content:
-    st.write("## 🔹 BASIC F30 (Oil & Filter Only)")
-    basic_data = {
-        "Item": ["5-7qrts Oil", "Oil Filter", "Labour", "TOTAL"],
-        "N20": ["$15,000", "$2,800", "$10,000", "$32,800"],
-        "N55": ["$18,000", "$2,800", "$10,000", "$35,800"],
-        "B48": ["$18,000", "$3,500", "$10,000", "$39,500"],
-        "B58": ["$21,000", "$5,000", "$10,000", "$44,000"]
-    }
-    st.table(pd.DataFrame(basic_data))
+# --- BASIC SERVICE TABLE ---
+st.write("### 🔹 BASIC F30 (Oil & Filter Only)")
+basic_data = {
+    "Item": ["5-7qrts Oil", "Oil Filter", "Labour", "TOTAL"],
+    "N20": ["$15,000", "$2,800", "$10,000", "**$32,800**"],
+    "N55": ["$18,000", "$2,800", "$10,000", "**$35,800**"],
+    "B48": ["$18,000", "$3,500", "$10,000", "**$39,500**"],
+    "B58": ["$21,000", "$5,000", "$10,000", "**$44,000**"]
+}
+st.table(pd.DataFrame(basic_data))
 
-    st.write("## 🔸 REGULAR F30 (Full Service)")
-    reg_data = {
-        "Item": ["Air Filter", "Cabin Filter", "Labour", "TOTAL"],
-        "N20": ["$5,000", "$6,000", "$14,500", "$43,300"],
-        "N55": ["$5,000", "$6,000", "$14,500", "$46,300"],
-        "B48": ["$8,000", "$8,000", "$15,500", "$53,000"],
-        "B58": ["$8,000", "$8,000", "$15,500", "$57,500"]
-    }
-    st.table(pd.DataFrame(reg_data))
+# --- REGULAR SERVICE TABLE ---
+st.write("### 🔸 REGULAR F30 (Full Service)")
+reg_data = {
+    "Item": ["Air Filter", "Cabin Filter", "Labour", "TOTAL"],
+    "N20": ["$5,000", "$6,000", "$14,500", "**$43,300**"],
+    "N55": ["$5,000", "$6,000", "$14,500", "**$46,300**"],
+    "B48": ["$8,000", "$8,000", "$15,500", "**$53,000**"],
+    "B58": ["$8,000", "$8,000", "$15,500", "**$57,500**"]
+}
+st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
 
-# --- WHATSAPP ---
+# --- WHATSAPP SECTION ---
 st.write("### 📅 Book an Appointment")
-c_name = st.text_input("Name")
-c_car = st.text_input("Car Model")
+customer_name = st.text_input("Enter your name")
+car_model = st.text_input("Car Model (e.g. M340i)")
 
-# Use official number (e.g. 1876...)
-garage_phone = "18764672031" 
+# Replace with the real number
+garage_phone = "18764972031" 
 
-if c_name and c_car:
-    msg = f"Hello Bowla's Garage, my name is {c_name}. I'd like to book for my {c_car}."
+if customer_name and car_model:
+    msg = f"Hello Bowla's Garage, my name is {customer_name}. I'd like to book a service for my {car_model}."
     wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
     st.link_button("🟢 Message on WhatsApp", wa_url, use_container_width=True)
+else:
+    st.button("Message on WhatsApp (Enter details first)", disabled=True, use_container_width=True)
 
 st.caption("© 2026 Bowla's Garage")
