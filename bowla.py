@@ -74,14 +74,21 @@ st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
 
-# --- CONTACT & SOCIALS ---
+# --- APPOINTMENT & CONTACT SECTION ---
+st.markdown("---")
+st.write("### 📅 Book an Appointment")
+
+# 1. We must define these BEFORE the if-statement to avoid the NameError
+customer_name = st.text_input("Enter your name")
+car_model = st.text_input("Car Model (e.g. M340i)")
+
 st.write("### 📍 Location & Socials")
 
 # Official Garage Details
-garage_phone = "18764972031" # Replace with Bowla's real number
-ig_handle = "bowlas_garage" # Replace with real IG handle
+garage_phone = "18764972031" 
+ig_handle = "bowlas_garage"
 # Official Google Maps link for 90C Red Hills Road
-google_maps_url = "https://www.google.com/maps/search/?api=1&query=Bowlas+Garage+Ltd+90c+Red+Hills+Rd+Kingston"
+google_maps_url = "https://www.google.com/maps/search/?api=1&query=90C+Red+Hills+Road+Kingston"
 
 # Three Clean Buttons (WhatsApp, Instagram, and Map)
 col1, col2, col3 = st.columns(3)
@@ -92,7 +99,7 @@ with col1:
         wa_url = f"https://wa.me/{garage_phone}?text={msg.replace(' ', '%20')}"
         st.link_button("🟢 WhatsApp", wa_url, use_container_width=True)
     else:
-        st.button("🟢 WhatsApp", disabled=True, use_container_width=True)
+        st.button("🟢 WhatsApp", disabled=True, use_container_width=True, help="Enter name and car model first")
 
 with col2:
     st.link_button("📸 Instagram", f"https://instagram.com/{ig_handle}", use_container_width=True)
