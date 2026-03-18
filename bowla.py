@@ -74,13 +74,15 @@ st.table(pd.DataFrame(reg_data))
 
 st.markdown("---")
 
-# --- WHATSAPP BOOKING SECTION ---
+# --- WHATSAPP SECTION ---
 st.write("### 📅 Book an Appointment")
 customer_name = st.text_input("Enter your name")
 car_model = st.text_input("Car Model (e.g. M340i)")
 
-# Put the real phone number here (e.g., 18765551234)
+# Replace with the real number (e.g., 18765551234)
 garage_phone = "18764972031" 
+# Replace with the real IG handle (e.g., bowlas_garage)
+ig_handle = "bowlas_garage" 
 
 if customer_name and car_model:
     msg = f"Hello Bowla's Garage, my name is {customer_name}. I'd like to book a service for my {car_model}."
@@ -89,12 +91,15 @@ if customer_name and car_model:
 else:
     st.button("Message on WhatsApp (Enter details first)", disabled=True, use_container_width=True)
 
+# Instagram Button
+st.link_button(f"📸 Follow @{ig_handle} on Instagram", f"https://instagram.com/{ig_handle}", use_container_width=True)
+
 st.markdown("---")
 
-# --- THE ESTIMATE REMINDER ---
+# --- THE ESTIMATE REMINDER & FOOTER ---
 st.warning("""
 **Please Note:** All prices listed are **estimates** based on current market rates for parts and fluids. 
-Final pricing may vary depending on parts availability, specific vehicle requirements, or additional work requested.
+Final pricing may vary depending on parts availability or additional work required.
 """, icon="⚠️")
 
-st.caption("© 2026 Bowla's Garage | BMW Specialist Kingston")
+st.caption(f"© 2026 Bowla's Garage | 90C Red Hills Road | @{ig_handle}")
