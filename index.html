@@ -386,7 +386,48 @@
       <a class="btn btn-secondary" href="https://www.instagram.com/bowlasgarageltd/" target="_blank">Instagram</a>
     </div>
   </section>
+<section class="contact" id="service-request">
+  <h2>Request a Service</h2>
+  <p>Enter your chassis number and service details. When you submit, WhatsApp will open with your request already filled in.</p>
 
+  <div style="max-width: 650px; margin: 30px auto 0; text-align: left;">
+    <label>Chassis Number</label>
+    <input id="chassisNumber" type="text" placeholder="Example: WBA..." style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+
+    <label>Vehicle Model</label>
+    <input id="vehicleModel" type="text" placeholder="Example: BMW F30 320i" style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+
+    <label>Required Service</label>
+    <textarea id="serviceDetails" rows="5" placeholder="Briefly describe the service needed..." style="width:100%; padding:14px; margin:8px 0 22px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;"></textarea>
+
+    <button onclick="sendServiceRequest()" class="btn btn-primary" style="width:100%; border:none; cursor:pointer;">
+      Send Service Request on WhatsApp
+    </button>
+  </div>
+</section>
+
+<script>
+  function sendServiceRequest() {
+    const chassis = document.getElementById("chassisNumber").value.trim();
+    const vehicle = document.getElementById("vehicleModel").value.trim();
+    const service = document.getElementById("serviceDetails").value.trim();
+
+    if (!chassis || !service) {
+      alert("Please enter your chassis number and service details before sending.");
+      return;
+    }
+
+    const phoneNumber = "18764972031";
+
+    const message =
+      "Hi Bowla's Garage, I would like to request a service.%0A%0A" +
+      "Chassis Number: " + encodeURIComponent(chassis) + "%0A" +
+      "Vehicle Model: " + encodeURIComponent(vehicle || "Not provided") + "%0A" +
+      "Required Service: " + encodeURIComponent(service);
+
+    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
+  }
+</script>
   <footer>
     © 2026 Bowla's Garage Limited. Built for premium BMW service.
   </footer>
