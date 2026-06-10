@@ -331,7 +331,25 @@ header::after {
       </div>
     </div>
   </header>
+<section class="contact" id="service-request">
+  <h2>Request a Service</h2>
+  <p>Enter your chassis number and service details. When you submit, WhatsApp will open with your request already filled in.</p>
 
+  <div style="max-width: 650px; margin: 30px auto 0; text-align: left;">
+    <label>Chassis Number</label>
+    <input id="chassisNumber" type="text" placeholder="Example: WBA..." style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+
+    <label>Vehicle Model</label>
+    <input id="vehicleModel" type="text" placeholder="Example: BMW F30 320i" style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+
+    <label>Required Service</label>
+    <textarea id="serviceDetails" rows="5" placeholder="Briefly describe the service needed..." style="width:100%; padding:14px; margin:8px 0 22px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;"></textarea>
+
+    <button onclick="sendServiceRequest()" class="btn btn-primary" style="width:100%; border:none; cursor:pointer;">
+      Send Service Request on WhatsApp
+    </button>
+  </div>
+</section>
   <section>
     <div class="section-title">
       <h2>Why Choose Us</h2>
@@ -406,25 +424,7 @@ header::after {
       <a class="btn btn-secondary" href="https://www.instagram.com/bowlasgarageltd/" target="_blank">Instagram</a>
     </div>
   </section>
-<section class="contact" id="service-request">
-  <h2>Request a Service</h2>
-  <p>Enter your chassis number and service details. When you submit, WhatsApp will open with your request already filled in.</p>
 
-  <div style="max-width: 650px; margin: 30px auto 0; text-align: left;">
-    <label>Chassis Number</label>
-    <input id="chassisNumber" type="text" placeholder="Example: WBA..." style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
-
-    <label>Vehicle Model</label>
-    <input id="vehicleModel" type="text" placeholder="Example: BMW F30 320i" style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
-
-    <label>Required Service</label>
-    <textarea id="serviceDetails" rows="5" placeholder="Briefly describe the service needed..." style="width:100%; padding:14px; margin:8px 0 22px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;"></textarea>
-
-    <button onclick="sendServiceRequest()" class="btn btn-primary" style="width:100%; border:none; cursor:pointer;">
-      Send Service Request on WhatsApp
-    </button>
-  </div>
-</section>
 
 <script>
   function sendServiceRequest() {
