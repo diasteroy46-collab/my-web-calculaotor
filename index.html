@@ -4,11 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bowla's Garage Limited | BMW Specialist</title>
+
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -18,6 +23,7 @@
       line-height: 1.6;
     }
 
+    /* BMW M STRIPE */
     .m-stripe {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -29,6 +35,7 @@
     .m-navy { background: #003da5; }
     .m-red { background: #e4002b; }
 
+    /* HERO */
     header {
       min-height: 70vh;
       display: flex;
@@ -37,31 +44,32 @@
       text-align: center;
       padding: 80px 20px;
       background:
-        radial-gradient(circle at center, rgba(0, 61, 165, 0.22), transparent 35%),
-        linear-gradient(135deg, #10131d 0%, #08090d 55%, #000 100%);
+        radial-gradient(
+          circle at center,
+          rgba(0, 61, 165, 0.22),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #10131d 0%,
+          #08090d 55%,
+          #000 100%
+        );
       position: relative;
       overflow: hidden;
     }
-header::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("bowlalogo.png.jpg");
-  background-repeat: no-repeat;
-  background-position: 60%;
-  background-size: 500px;
-  opacity: 0.03;
-  z-index: 0;
-  pointer-events: none;
-}
-    header::before {
+
+    header::after {
       content: "";
       position: absolute;
-      font-size: clamp(4rem, 13vw, 13rem);
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.035);
-      letter-spacing: 8px;
-      white-space: nowrap;
+      inset: 0;
+      background-image: url("bowlalogo.png.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 500px;
+      opacity: 0.03;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .hero-content {
@@ -69,15 +77,18 @@ header::after {
       z-index: 1;
       max-width: 900px;
     }
-.hero-logo {
-    width: 110px;
-    max-width: 110px;
-    height: auto;
-    margin-bottom: 16px;
-    border-radius: 50%;
-    filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
-}
-}
+
+    .hero-logo {
+    display: block;
+      width: 110px;
+      max-width: 110px;
+      height: auto;
+      margin:0% auto 16px;
+      margin-bottom: 16px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+    }
+
     .badge {
       display: inline-block;
       border: 1px solid rgba(255,255,255,0.18);
@@ -98,7 +109,12 @@ header::after {
     }
 
     h1 span {
-      background: linear-gradient(90deg, #009ada, #ffffff, #e4002b);
+      background: linear-gradient(
+        90deg,
+        #009ada,
+        #ffffff,
+        #e4002b
+      );
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -111,6 +127,7 @@ header::after {
       font-size: 1.08rem;
     }
 
+    /* BUTTONS */
     .buttons {
       display: flex;
       justify-content: center;
@@ -119,6 +136,7 @@ header::after {
     }
 
     .btn {
+      display: inline-block;
       text-decoration: none;
       color: #fff;
       padding: 14px 22px;
@@ -142,6 +160,7 @@ header::after {
       box-shadow: 0 15px 35px rgba(0,0,0,0.35);
     }
 
+    /* GENERAL SECTIONS */
     section {
       padding: 80px 20px;
       max-width: 1180px;
@@ -160,31 +179,154 @@ header::after {
 
     .section-title p {
       color: #aaa;
+      max-width: 720px;
+      margin: auto;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 20px;
+    /* SERVICE REQUEST */
+    .contact {
+      background: linear-gradient(135deg, #151824, #05060a);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      padding: 70px 20px;
     }
 
-    .card {
-      background: linear-gradient(145deg, #151824, #0d0f16);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 26px;
+    .contact h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 12px;
+    }
+
+    .contact p {
+      color: #aaa;
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+
+    .service-form {
+      max-width: 650px;
+      margin: 30px auto 0;
+      text-align: left;
+    }
+
+    .service-form label {
+      display: block;
+      font-weight: 700;
+    }
+
+    .service-form input,
+    .service-form textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0 18px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #0f1118;
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .service-form textarea {
+      margin-bottom: 22px;
+      resize: vertical;
+    }
+
+    .service-form input:focus,
+    .service-form textarea:focus {
+      border-color: #009ada;
+    }
+
+    .service-submit {
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* PARTS + WORK GALLERIES */
+    .garage-showcase {
+      overflow: hidden;
+    }
+
+    .showcase-scroll {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-inline: contain;
+      padding: 8px 4px 24px;
+
+      scrollbar-width: thin;
+      scrollbar-color: #4b4f5c #10131c;
+    }
+
+    .showcase-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .showcase-scroll::-webkit-scrollbar-track {
+      background: #10131c;
+      border-radius: 20px;
+    }
+
+    .showcase-scroll::-webkit-scrollbar-thumb {
+      background: #4b4f5c;
+      border-radius: 20px;
+    }
+
+    .showcase-card {
+      flex: 0 0 340px;
+      width: 340px;
+      height: 430px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: #10131c;
+      scroll-snap-align: start;
       box-shadow: 0 20px 45px rgba(0,0,0,0.25);
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.25rem;
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.35s ease;
     }
 
-    .card p {
-      color: #bdbdbd;
+    .showcase-card:hover img {
+      transform: scale(1.04);
     }
 
+    .scroll-hint {
+      text-align: center;
+      color: #777;
+      font-size: 0.88rem;
+      margin-top: 4px;
+    }
+
+    .parts-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .parts-buttons .btn {
+      min-width: 220px;
+      text-align: center;
+    }
+
+    .our-work {
+      padding-top: 55px;
+    }
+
+    /* SERVICE PACKAGES */
     .price-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -207,7 +349,12 @@ header::after {
       left: 0;
       height: 5px;
       width: 100%;
-      background: linear-gradient(90deg, #009ada, #003da5, #e4002b);
+      background: linear-gradient(
+        90deg,
+        #009ada,
+        #003da5,
+        #e4002b
+      );
     }
 
     .price-card h3 {
@@ -244,7 +391,7 @@ header::after {
 
     .total-row td {
       font-weight: 800;
-      color: #ffffff;
+      color: #fff;
     }
 
     .note {
@@ -254,24 +401,12 @@ header::after {
       font-size: 0.95rem;
     }
 
-    .contact {
-      background: linear-gradient(135deg, #151824, #05060a;
-      border-top: 1px solid rgba(255,255,255,0.08);;
+    .email-button-wrap {
       text-align: center;
-      padding: 70px 20px;
+      margin: 55px 0 35px;
     }
 
-    .contact h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      margin-bottom: 12px;
-    }
-
-    .contact p {
-      color: #aaa;
-      max-width: 620px;
-      margin: 0 auto 28px;
-    }
-
+    /* FOOTER */
     footer {
       padding: 24px 20px;
       text-align: center;
@@ -280,9 +415,33 @@ header::after {
       font-size: 0.9rem;
     }
 
+    /* TABLET */
+    @media (max-width: 850px) {
+      .showcase-card {
+        flex-basis: 300px;
+        width: 300px;
+        height: 390px;
+      }
+    }
+
+    /* MOBILE */
     @media (max-width: 600px) {
       header {
         min-height: 78vh;
+        padding: 65px 14px;
+      }
+
+      header::after {
+        background-size: 350px;
+        background-position: center;
+      }
+
+      .hero-logo {
+        width: 95px;
+      }
+
+      .badge {
+        font-size: 0.82rem;
       }
 
       .btn {
@@ -292,6 +451,39 @@ header::after {
 
       section {
         padding: 55px 12px;
+      }
+
+      .section-title {
+        margin-bottom: 28px;
+      }
+
+      .showcase-scroll {
+        gap: 14px;
+        padding-left: 4px;
+        padding-right: 12px;
+        padding-bottom: 18px;
+      }
+
+      .showcase-card {
+        flex: 0 0 82vw;
+        width: 82vw;
+        height: 440px;
+        border-radius: 18px;
+      }
+
+      .parts-buttons {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .parts-buttons .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .our-work {
+        padding-top: 45px;
       }
 
       .price-card {
@@ -312,132 +504,451 @@ header::after {
     }
   </style>
 </head>
+
 <body>
+
+  <!-- BMW M STRIPE -->
   <div class="m-stripe">
     <div class="m-blue"></div>
     <div class="m-navy"></div>
     <div class="m-red"></div>
   </div>
 
+  <!-- HERO -->
   <header>
     <div class="hero-content">
-      <img src="bowlalogo.png.jpg" alt="Bowla's Garage Logo" class="hero-logo">
-      <div class="badge">Premium BMW Service • Maintenance • Diagnostics</div>
-      <h1>Bowla's Garage <span>Limited</span></h1>
-      <p>Clean, reliable and professional BMW-focused servicing. View our service packages below and book directly through WhatsApp.</p>
-      <div class="buttons">
-        <a class="btn btn-secondary" href="#prices">View Service Packages</a>
+
+      <img
+        src="bowlalogo.png.jpg"
+        alt="Bowla's Garage Logo"
+        class="hero-logo"
+      >
+
+      <div class="badge">
+        Premium BMW Service • Maintenance • Diagnostics
       </div>
+
+      <h1>
+        Bowla's Garage <span>Limited</span>
+      </h1>
+
+      <p>
+        Clean, reliable and professional BMW-focused servicing.
+        View our service packages below and book directly through WhatsApp.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-secondary" href="#prices">
+          View Service Packages
+        </a>
+      </div>
+
     </div>
   </header>
-<section class="contact" id="service-request">
-  <h2>Request a Service</h2>
-  <p>Enter your chassis number and service details. When you submit, WhatsApp will open with your request already filled in.</p>
 
-  <div style="max-width: 650px; margin: 30px auto 0; text-align: left;">
-    <label>Chassis Number</label>
-    <input id="chassisNumber" type="text" placeholder="Example: WBA..." style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+  <!-- SERVICE REQUEST -->
+  <section class="contact" id="service-request">
 
-    <label>Vehicle Model</label>
-    <input id="vehicleModel" type="text" placeholder="Example: BMW F30 320i" style="width:100%; padding:14px; margin:8px 0 18px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;">
+    <h2>Request a Service</h2>
 
-    <label>Required Service</label>
-    <textarea id="serviceDetails" rows="5" placeholder="Briefly describe the service needed..." style="width:100%; padding:14px; margin:8px 0 22px; border-radius:10px; border:1px solid #333; background:#0f1118; color:white;"></textarea>
+    <p>
+      Enter your chassis number and service details.
+      When you submit, WhatsApp will open with your request already filled in.
+    </p>
 
-    <button onclick="sendServiceRequest()" class="btn btn-primary" style="width:100%; border:none; cursor:pointer;">
-      Send Service Request on WhatsApp
-    </button>
-  </div>
-</section>
-  <section>
-    <div class="section-title">
-      <h2>Why Choose Us</h2>
-      <p>A premium feel for customers before they even reach the garage.</p>
-    </div>
+    <div class="service-form">
 
-    <div class="cards">
-      <div class="card">
-        <h3>BMW-Focused Care</h3>
-        <p>Service packages built around BMW engines and maintenance needs.</p>
-      </div>
-      <div class="card">
-        <h3>Clear Pricing</h3>
-        <p>Customers can check package prices before booking, reducing confusion.</p>
-      </div>
-      <div class="card">
-        <h3>Easy Booking</h3>
-        <p>One tap takes customers straight to WhatsApp to schedule service.</p>
-      </div>
+      <label for="chassisNumber">Chassis Number</label>
+
+      <input
+        id="chassisNumber"
+        type="text"
+        placeholder="Example: WBA..."
+      >
+
+      <label for="vehicleModel">Vehicle Model</label>
+
+      <input
+        id="vehicleModel"
+        type="text"
+        placeholder="Example: BMW F30 320i"
+      >
+
+      <label for="serviceDetails">Required Service</label>
+
+      <textarea
+        id="serviceDetails"
+        rows="5"
+        placeholder="Briefly describe the service needed..."
+      ></textarea>
+
+      <button
+        onclick="sendServiceRequest()"
+        class="btn btn-primary service-submit"
+      >
+        Send Service Request on WhatsApp
+      </button>
+
     </div>
   </section>
 
+  <!-- NEW & USED BMW PARTS -->
+  <section class="garage-showcase" id="parts">
+
+    <div class="section-title">
+      <h2>New & Used BMW Parts</h2>
+
+      <p>
+        Looking for a specific BMW part? Browse some of the parts
+        available through Bowla's Garage and enquire directly through WhatsApp.
+      </p>
+    </div>
+
+    <div class="showcase-scroll">
+
+      <div class="showcase-card">
+        <img
+          src="images/parts1.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/parts2.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/parts3.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/parts4.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/parts5.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/parts6.png"
+          alt="BMW parts available through Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+    </div>
+
+    <p class="scroll-hint">
+      Swipe or scroll to view more
+    </p>
+
+    <div class="parts-buttons">
+
+      <a
+        class="btn btn-primary"
+        href="https://wa.me/18764972031?text=Hi%20Bowla%27s%20Garage%2C%20I%27d%20like%20to%20enquire%20about%20a%20new%20BMW%20part."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Enquire New Parts
+      </a>
+
+      <a
+        class="btn btn-secondary"
+        href="https://wa.me/18764972031?text=Hi%20Bowla%27s%20Garage%2C%20I%27d%20like%20to%20enquire%20about%20a%20used%20BMW%20part."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Enquire Used Parts
+      </a>
+
+    </div>
+  </section>
+
+  <!-- OUR WORK -->
+  <section class="garage-showcase our-work" id="our-work">
+
+    <div class="section-title">
+      <h2>Our Work</h2>
+
+      <p>
+        A look at some of the BMW servicing, repairs and performance
+        work carried out at Bowla's Garage.
+      </p>
+    </div>
+
+    <div class="showcase-scroll">
+
+      <div class="showcase-card">
+        <img
+          src="images/work1.png"
+          alt="BMW service work at Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/work2.png"
+          alt="BMW service work at Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/work3.png"
+          alt="BMW service work at Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/work4.png"
+          alt="BMW service work at Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+      <div class="showcase-card">
+        <img
+          src="images/work5.png"
+          alt="BMW service work at Bowla's Garage"
+          loading="lazy"
+        >
+      </div>
+
+    </div>
+
+    <p class="scroll-hint">
+      Swipe or scroll to view more
+    </p>
+
+  </section>
+
+  <!-- SERVICE PACKAGES -->
   <section id="prices">
+
     <div class="section-title">
       <h2>Service Packages</h2>
-      <p>Prices shown in JMD ARE ESTIMATED. Each package shows the parts and labour breakdown.</p>
+
+      <p>
+        Prices shown in JMD ARE ESTIMATED.
+        Each package shows the parts and labour breakdown.
+      </p>
     </div>
 
     <div class="price-grid">
+
+      <!-- BASIC F30 -->
       <div class="price-card">
+
         <h3>Basic F30</h3>
         <div class="engine">5–7 qts engine oil service</div>
+
         <table class="price-table">
-          <tr><th>Item</th><th>N20</th><th>N55</th><th>B48</th><th>B58</th></tr>
-          <tr><td>Oil</td><td>$15,000</td><td>$18,000</td><td>$18,000</td><td>$21,000</td></tr>
-          <tr><td>Oil Filter</td><td>$3,000</td><td>$3,000</td><td>$3,500</td><td>$5,000</td></tr>
-          <tr><td>Air Filter</td><td>$8,000</td><td>$8,000</td><td>$8,000</td><td>$8,000</td></tr>
-          <tr><td>Labour</td><td>$10,000</td><td>$10,000</td><td>$10,000</td><td>$10,000</td></tr>
-          <tr class="total-row"><td>Total</td><td>$33,800</td><td>$35,800</td><td>$39,500</td><td>$44,000</td></tr>
+
+          <tr>
+            <th>Item</th>
+            <th>N20</th>
+            <th>N55</th>
+            <th>B48</th>
+            <th>B58</th>
+          </tr>
+
+          <tr>
+            <td>Oil</td>
+            <td>$15,000</td>
+            <td>$18,000</td>
+            <td>$18,000</td>
+            <td>$21,000</td>
+          </tr>
+
+          <tr>
+            <td>Oil Filter</td>
+            <td>$3,000</td>
+            <td>$3,000</td>
+            <td>$3,500</td>
+            <td>$5,000</td>
+          </tr>
+
+          <tr>
+            <td>Air Filter</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+          </tr>
+
+          <tr>
+            <td>Labour</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+          </tr>
+
+          <tr class="total-row">
+            <td>Total</td>
+            <td>$33,800</td>
+            <td>$35,800</td>
+            <td>$39,500</td>
+            <td>$44,000</td>
+          </tr>
+
         </table>
       </div>
 
+      <!-- REGULAR F30 -->
       <div class="price-card wide-card">
+
         <h3>Regular F30</h3>
         <div class="engine">5–7 qts engine oil service</div>
+
         <table class="price-table">
-          <tr><th>Item</th><th>N20</th><th>N55</th><th>B48</th><th>B58</th></tr>
-          <tr><td>Oil</td><td>$15,000</td><td>$18,000</td><td>$18,000</td><td>$21,000</td></tr>
-          <tr><td>Oil Filter</td><td>$3,000</td><td>$3,000</td><td>$3,500</td><td>$5,000</td></tr>
-          <tr><td>Air Filter</td><td>$8,000</td><td>$8,000</td><td>$8,000</td><td>$8,000</td></tr>
-          <tr><td>Cabin Filter</td><td>$6,000</td><td>$6,000</td><td>$8,000</td><td>$8,000</td></tr>
-          <tr><td>Labour</td><td>$10,000</td><td>$10,000</td><td>$10,000</td><td>$10,000</td></tr>
-          <tr class="total-row"><td>Total</td><td>$43,500</td><td>$46,500</td><td>$45,000</td><td>$57,500</td></tr>
+
+          <tr>
+            <th>Item</th>
+            <th>N20</th>
+            <th>N55</th>
+            <th>B48</th>
+            <th>B58</th>
+          </tr>
+
+          <tr>
+            <td>Oil</td>
+            <td>$15,000</td>
+            <td>$18,000</td>
+            <td>$18,000</td>
+            <td>$21,000</td>
+          </tr>
+
+          <tr>
+            <td>Oil Filter</td>
+            <td>$3,000</td>
+            <td>$3,000</td>
+            <td>$3,500</td>
+            <td>$5,000</td>
+          </tr>
+
+          <tr>
+            <td>Air Filter</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+          </tr>
+
+          <tr>
+            <td>Cabin Filter</td>
+            <td>$6,000</td>
+            <td>$6,000</td>
+            <td>$8,000</td>
+            <td>$8,000</td>
+          </tr>
+
+          <tr>
+            <td>Labour</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+            <td>$10,000</td>
+          </tr>
+
+          <tr class="total-row">
+            <td>Total</td>
+            <td>$43,500</td>
+            <td>$46,500</td>
+            <td>$45,000</td>
+            <td>$57,500</td>
+          </tr>
+
         </table>
       </div>
+
     </div>
 
-    <p class="note">Regular package includes cabin filter replacement and upgraded filter pricing where applicable.</p>
+    <p class="note">
+      Regular package includes cabin filter replacement and
+      upgraded filter pricing where applicable.
+    </p>
 
-    <div style="text-align:center; margin:55px 0 35px;">
-  <a class="btn btn-secondary" href="mailto:Vbowla@hotmail.com">
-    Email Us: Vbowla@hotmail.com
-  </a>
-</div>
+    <div class="email-button-wrap">
+      <a
+        class="btn btn-secondary"
+        href="mailto:Vbowla@hotmail.com"
+      >
+        Email Us: Vbowla@hotmail.com
+      </a>
+    </div>
 
-<script>
-  function sendServiceRequest() {
-    const chassis = document.getElementById("chassisNumber").value.trim();
-    const vehicle = document.getElementById("vehicleModel").value.trim();
-    const service = document.getElementById("serviceDetails").value.trim();
+  </section>
 
-    if (!chassis || !service) {
-      alert("Please enter your chassis number and service details before sending.");
-      return;
+  <!-- SERVICE REQUEST JAVASCRIPT -->
+  <script>
+    function sendServiceRequest() {
+      const chassis =
+        document.getElementById("chassisNumber").value.trim();
+
+      const vehicle =
+        document.getElementById("vehicleModel").value.trim();
+
+      const service =
+        document.getElementById("serviceDetails").value.trim();
+
+      if (!chassis || !service) {
+        alert(
+          "Please enter your chassis number and service details before sending."
+        );
+        return;
+      }
+
+      const phoneNumber = "18764972031";
+
+      const message =
+        "Hi Bowla's Garage, I would like to request a service.%0A%0A" +
+        "Chassis Number: " +
+        encodeURIComponent(chassis) +
+        "%0A" +
+        "Vehicle Model: " +
+        encodeURIComponent(vehicle || "Not provided") +
+        "%0A" +
+        "Required Service: " +
+        encodeURIComponent(service);
+
+      window.open(
+        "https://wa.me/" +
+        phoneNumber +
+        "?text=" +
+        message,
+        "_blank"
+      );
     }
+  </script>
 
-    const phoneNumber = "18764972031";
-
-    const message =
-      "Hi Bowla's Garage, I would like to request a service.%0A%0A" +
-      "Chassis Number: " + encodeURIComponent(chassis) + "%0A" +
-      "Vehicle Model: " + encodeURIComponent(vehicle || "Not provided") + "%0A" +
-      "Required Service: " + encodeURIComponent(service);
-
-    window.open("https://wa.me/" + phoneNumber + "?text=" + message, "_blank");
-  }
-</script>
+  <!-- FOOTER -->
   <footer>
     © 2026 Bowla's Garage Limited. Built for premium BMW service.
   </footer>
+
 </body>
 </html>
